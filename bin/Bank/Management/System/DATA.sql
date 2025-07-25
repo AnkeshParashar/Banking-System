@@ -1,0 +1,93 @@
+CREATE DATABASE BankData;
+
+USE BankData;
+
+CREATE TABLE IF NOT EXISTS signup1 ( 
+form_no VARCHAR(10), 
+name VARCHAR(30),
+father_name VARCHAR(30),
+DOB VARCHAR(20),
+gender VARCHAR(10),
+marital_status VARCHAR(10),
+email VARCHAR(100),
+address VARCHAR(100),
+city VARCHAR(30),
+state VARCHAR(30),
+PIN VARCHAR(10)
+);
+
+ALTER TABLE signup1
+ADD COLUMN age VARCHAR (5);
+
+SELECT * FROM signup1;
+
+CREATE TABLE IF NOT EXISTS signup2(
+form_no VARCHAR(10), 
+religion VARCHAR(30),
+category VARCHAR(30),
+income VARCHAR(30),
+education VARCHAR(50),
+occupation VARCHAR(50),
+PAN VARCHAR(10),
+aadhar VARCHAR(12)
+);
+
+SELECT * FROM signup2;
+
+CREATE TABLE signup3(
+form_no VARCHAR(10),
+accountType VARCHAR(50),
+cardno VARCHAR(16),
+PINno VARCHAR(4),
+ser VARCHAR(100)
+);
+
+ALTER TABLE signup3
+MODIFY cardno VARCHAR(17),
+MODIFY PINno VARCHAR(5);
+
+ALTER TABLE signup3
+CHANGE COLUMN ser services VARCHAR(100);
+
+SELECT * FROM signup3;
+
+CREATE TABLE login(
+form_no VARCHAR(10),
+cardno VARCHAR(16),
+PINno VARCHAR(4)
+);
+
+ALTER TABLE login
+MODIFY cardno VARCHAR(17),
+MODIFY PINno VARCHAR(5);
+
+SELECT * FROM login;
+
+CREATE TABLE deposit(
+PINno VARCHAR(5),
+date VARCHAR(20),
+amount VARCHAR(8)
+);
+
+SELECT * FROM deposit;
+
+ALTER TABLE deposit
+MODIFY date VARCHAR(100);
+
+ALTER TABLE transaction
+MODIFY  amount VARCHAR(20);
+
+ALTER TABLE deposit
+ADD COLUMN type VARCHAR(20);
+
+ALTER TABLE deposit
+RENAME TO transaction; 
+
+ALTER TABLE transaction
+ADD COLUMN cardno VARCHAR(17),
+ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
+
+ALTER TABLE transaction
+ADD COLUMN transactionID VARCHAR(11);
+
+SELECT * FROM transaction;
