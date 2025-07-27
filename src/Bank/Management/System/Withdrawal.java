@@ -108,9 +108,7 @@ public class Withdrawal extends JFrame implements ActionListener{
                         ps1.setString(1, PINno);
                         ps1.setString(2, cardno);
                         ResultSet result1 = ps1.executeQuery();
-                        //String q = "SELECT * FROM transaction WHERE PINno = '"+PINno+"'";
-                        //ResultSet result = con6.statement.executeQuery(q);
-
+                        
                     //LIMIT and BALANCE Calculation
                         int balance = 0;
                         int limit = 0;

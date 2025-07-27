@@ -271,7 +271,7 @@ public class SignUp3 extends JFrame implements ActionListener{
                     ser = ser + "ATM CARD, ";
                 }
             }
-            if (i==2){
+            if (i == 2){
                 if(s2.isSelected()){
                     ser = ser + "Internet Banking, ";
                 }

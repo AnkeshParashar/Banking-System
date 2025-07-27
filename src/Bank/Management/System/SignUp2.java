@@ -191,12 +191,11 @@ public class SignUp2 extends JFrame implements ActionListener{
         try {
             if(religion.equals("") || category.equals("") || income.equals("") || education.equals("") || occupation.equals("") || PAN.equals("") || aadhar.equals("") || religion.equals("Select Options.....") || category.equals("Select Options.....") || income.equals("Select Options.....") || education.equals("Select Options.....") || occupation.equals("Select Options.....")) {
                 JOptionPane.showMessageDialog(null,"Fill all the necessary Fields");
-
             }else if(!aadhar.matches("[0-9]{12}")){
                 JOptionPane.showMessageDialog(null,"Please enter your proper Aadhar Card Number");
             }else if(!PAN.matches("[A-Z0-9]{10}") || !PAN.matches("[A-Z]{5}\\d{4}.*")){
                 JOptionPane.showMessageDialog(null,"Please enter your proper PAN Card Number");
-            } else {
+            }else {
                 int option = JOptionPane.showConfirmDialog(null,"You cannot change the above data once it is saved." + "\n" + "Do you want to Continue?");
                 if(option == JOptionPane.OK_OPTION){
                     Link con2 = new Link();

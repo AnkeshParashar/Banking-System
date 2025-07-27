@@ -246,7 +246,7 @@ public class SignUp1 extends JFrame implements ActionListener{
 
     //JFrame     
         setLayout(null);
-        // setUndecorated(true);
+        setUndecorated(true);
         setSize(750,650);
         setLocation(360,40);
         setVisible(true);
@@ -263,7 +263,6 @@ public class SignUp1 extends JFrame implements ActionListener{
             String chooseDob = ((JTextField) dateChoose.getDateEditor().getUiComponent()).getText();
             String year;
             
-
         //DOB and AGE Calculation
             if (e.getSource()==age){
                 if(!chooseDob.matches("[A-Za-z]{3}+[\\s]+[0-9]{1,2}+[,]+[\\s]+[0-9]{4}") || chooseDob.equals("")){ //|| !dob.matches("[A-Za-z]{3}+$1+[0-9]{1,2}+,+$2+[0-9]{4}")

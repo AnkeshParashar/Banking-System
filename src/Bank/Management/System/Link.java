@@ -23,13 +23,10 @@ public class Link {
         try{
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankData","root","1234567890");
             statement = connection.createStatement();
-
         } catch(Exception e){
             e.printStackTrace();
-
         }
     }
     public static void main(String[] args) {
-        
     }
 }
