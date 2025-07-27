@@ -2,7 +2,7 @@ package Bank.Management.System;
 
 import javax.swing.*;
 
-//import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JDateChooser;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,21 +10,23 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
 //import java.time.Instant;
-import java.time.LocalDate;
-import java.time.Period;
+// import java.time.LocalDate;
+// import java.time.Period;
 //import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+// import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class SignUp1 extends JFrame implements ActionListener{
 
     JLabel labelApp, labelPage, labelDetails, labelName, labelFName, labelDOB, dobFormat, labelAge, labelGender, labelMStatus, labelEmail, labelAdd, labelCity, labelState, labelPin;
-    JTextField textName, textFName, dateDOB, textEmail, textAdd, textCity, textState, textPin;
-    //JDateChooser dateDOB;
+    JTextField textName, textFName, textEmail, textAdd, textCity, textState, textPin;
+    JDateChooser dateChoose;
     JTextArea area;
     JRadioButton g1, g2, m1, m2;
     JButton age, next;
+    int dobMonthInt;
 
 //to generate random no.     
     Random no = new Random();
@@ -94,16 +96,10 @@ public class SignUp1 extends JFrame implements ActionListener{
         labelDOB.setBounds(100,220,600,30);
         add(labelDOB);
 
-        dobFormat = new JLabel("(DD-MM-YYYY)");
-        dobFormat.setFont(new Font("Raleway", Font.BOLD,8));
-        dobFormat.setForeground(Color.WHITE);
-        dobFormat.setBounds(237,222,600,30);
-        add(dobFormat);
-
-        dateDOB = new JTextField();
-        dateDOB.setForeground(new Color(100,100,100));
-        dateDOB.setBounds(300,225,200,22);
-        add(dateDOB);
+        dateChoose = new JDateChooser();
+        dateChoose.setForeground(new Color(100,100,100));
+        dateChoose.setBounds(300,225,200,22);
+        add(dateChoose);
 
     //AGE Calculation
         age = new JButton("Age :");
@@ -250,7 +246,7 @@ public class SignUp1 extends JFrame implements ActionListener{
 
     //JFrame     
         setLayout(null);
-        setUndecorated(true);
+        // setUndecorated(true);
         setSize(750,650);
         setLocation(360,40);
         setVisible(true);
@@ -264,23 +260,69 @@ public class SignUp1 extends JFrame implements ActionListener{
             String name = textName.getText();
             String fname = textFName.getText();
             String areaAge = area.getText();
-            String dob = dateDOB.getText();
+            String chooseDob = ((JTextField) dateChoose.getDateEditor().getUiComponent()).getText();
+            String year;
             
+
         //DOB and AGE Calculation
             if (e.getSource()==age){
-                if(!dob.matches("[0-9]{2}+[-]+[0-9]{2}+[-]+[0-9]{4}") || dob.equals("") || Integer.parseInt(dob.substring(0,2)) < 1 || Integer.parseInt(dob.substring(0,2)) > 31 || Integer.parseInt(dob.substring(3,5)) < 1 || Integer.parseInt(dob.substring(3,5)) > 12){ //|| !dob.matches("[A-Za-z]{3}+$1+[0-9]{1,2}+,+$2+[0-9]{4}")
+                if(!chooseDob.matches("[A-Za-z]{3}+[\\s]+[0-9]{1,2}+[,]+[\\s]+[0-9]{4}") || chooseDob.equals("")){ //|| !dob.matches("[A-Za-z]{3}+$1+[0-9]{1,2}+,+$2+[0-9]{4}")
                         JOptionPane.showMessageDialog(null,"Please enter your Date of Birth.");
-                }else {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                    LocalDate DOB = LocalDate.parse(dob, formatter);
-                    LocalDate today = LocalDate.now();
-                    Period AGE = Period.between(DOB, today);
-                    String finalAge = AGE.toString();
-                    String agetoprint =  finalAge.substring(1,3);
-                    area.append(agetoprint);   
+                }else {       
+                    if(chooseDob.length() == 11){
+                    year = chooseDob.substring(7,11);
+                    }else{
+                        year = chooseDob.substring(8,12);
+                    }
+                    int dobYearInt = Integer.parseInt(year);
+                    String month = chooseDob.substring(0,3);
+                    switch(month){
+                        case "Jan" : dobMonthInt = 1;
+                        break;
+                        case "Feb" : dobMonthInt = 2;
+                        break;
+                        case "Mar" : dobMonthInt = 3;
+                        break;
+                        case "Apr" : dobMonthInt = 4;
+                        break;
+                        case "May" : dobMonthInt = 5;
+                        break;
+                        case "Jun" : dobMonthInt = 6;
+                        break;
+                        case "Jul" : dobMonthInt = 7;
+                        break;
+                        case "Aug" : dobMonthInt = 8;
+                        break;
+                        case "Sep" : dobMonthInt = 9;
+                        break;
+                        case "Oct" : dobMonthInt = 10;
+                        break;
+                        case "Nov" : dobMonthInt = 11;
+                        break;
+                        case "Dec" : dobMonthInt = 12;
+                        break;
+                    }             
+                    Date today = new Date();
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                    String todayString = formatter.format(today);
+                    String todayYearSub = todayString.substring(6,10);
+                    String todayMonthSub = todayString.substring(3,5);
+                    int todayYearInt = Integer.parseInt(todayYearSub);
+                    int todayMonthInt = Integer.parseInt(todayMonthSub);
+                    int age = todayYearInt - dobYearInt;
+                    int ageMonth = todayMonthInt - dobMonthInt;
+                    if (ageMonth < 0){
+                        age = age - 1;
+                        String finalAge = Integer.toString(age);
+                        area.setText("");
+                        area.append(finalAge);
+                    }else if (ageMonth > 0){
+                        String finalAge = Integer.toString(age);
+                        area.setText("");
+                        area.append(finalAge);
+                    }
                 }
             }
-
             String gender = "";
             if(g1.isSelected()){
                 gender = "Male";
@@ -300,7 +342,7 @@ public class SignUp1 extends JFrame implements ActionListener{
             String pin = textPin.getText();
 
             if(e.getSource()==next){                
-                if(name.equals("")|| fname.equals("") || dob.equals("") || areaAge.equals("") || gender.equals("") || mstatus.equals("") || email.equals("") || address.equals("") || city.equals("") || state.equals("") || pin.equals("") ){
+                if(name.equals("")|| fname.equals("") || chooseDob.equals("") || areaAge.equals("") || gender.equals("") || mstatus.equals("") || email.equals("") || address.equals("") || city.equals("") || state.equals("") || pin.equals("") ){
                     JOptionPane.showMessageDialog(null,"Fill all the necessary Fields");
                 }else if(!name.matches("(?=.*[A-Za-z])[A-Za-z\\s]{2,30}")){
                     JOptionPane.showMessageDialog(null,"Name should be in between 2 to 30 characters");
@@ -324,7 +366,7 @@ public class SignUp1 extends JFrame implements ActionListener{
                     if (option == JOptionPane.OK_OPTION ){ 
                         //forming object of connection class which was named as Link
                         Link con1 = new Link();
-                        PreparedStatement ps = con1.connection.prepareStatement("INSERT INTO signup1 VALUES('"+formno+"','"+name+"','"+fname+"','"+dob+"','"+gender+"','"+mstatus+"','"+email+"','"+address+"','"+city+"','"+state+"','"+pin+"','"+areaAge+"')");
+                        PreparedStatement ps = con1.connection.prepareStatement("INSERT INTO signup1 VALUES('"+formno+"','"+name+"','"+fname+"','"+chooseDob+"','"+gender+"','"+mstatus+"','"+email+"','"+address+"','"+city+"','"+state+"','"+pin+"','"+areaAge+"')");
                         ps.executeUpdate();
 
                         //to go to the new sing up window(new signup class)

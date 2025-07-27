@@ -6,5 +6,6 @@
         "c:\\Users\\Kushal\\Downloads\\jcalendar-1.4.jar",
         "c:\\Users\\Kushal\\Downloads\\mysql-connector-j-9.3.0.jar"
     ],
-    "java.dependency.packagePresentation": "flat"
+    "java.dependency.packagePresentation": "flat",
+    "java.debug.settings.onBuildFailureProceed": true
 }
